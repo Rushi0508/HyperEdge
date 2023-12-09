@@ -24,6 +24,7 @@ function page() {
           <Stats/>
           <Business/>
           <Testimonials/>
+          <Clients/>
           <CTA/>
           <Footer/>
         </div>

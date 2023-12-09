@@ -13,9 +13,17 @@ import hero from './hero.png'
 import people01 from "./people01.png";
 import people02 from "./people02.png";
 import people03 from "./people03.png";
+import binance from './binance.png'
+import airbnb from './airbnb.png'
+import coinbase from './coinbase.png'
+import dropbox from './dropbox.png'
 
 export {
   logo,
+  airbnb,
+  binance,
+  dropbox,
+  coinbase,
   quotes,
   send,
   shield,
