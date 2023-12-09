@@ -1,5 +1,5 @@
 import styles from "./style";
-import {Navbar, GetStarted, Hero, CTA, Stats, Footer, Clients} from "./(components)"
+import {Navbar, Business, Hero, CTA, Stats, Footer, Clients} from "./(components)"
 
 function page() {
   return (
@@ -21,9 +21,8 @@ function page() {
       <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
         <div className={`${styles.boxWidth}`}>
           <Stats/>
-          <Clients/>
+          <Business/>
           <CTA/>
-          <GetStarted/>
           <Footer/>
         </div>
       </div>      

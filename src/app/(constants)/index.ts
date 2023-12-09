@@ -23,23 +23,23 @@ export const features = [
   {
     id: "feature-1",
     icon: star,
-    title: "Rewards",
+    title: "Collaborative Campaigns",
     content:
-      "The best credit cards offer some tantalizing combinations of promotions and prizes",
-  },
-  {
-    id: "feature-2",
-    icon: shield,
-    title: "100% Secured",
-    content:
-      "We take proactive steps make sure your information and transactions are secure.",
-  },
-  {
-    id: "feature-3",
-    icon: send,
-    title: "Balance Transfer",
-    content:
-      "A balance transfer credit card can save you a lot of money in interest charges.",
+      "Streamline brand and creator partnerships seamlessly. Our platform simplifies collaboration, ensuring a hassle-free journey from proposal to execution for impactful campaigns.",
+    },
+    {
+      id: "feature-2",
+      icon: shield,
+      title: "100% Verified & Secured",
+      content:
+      "We prioritize authenticity and trust. Our platform features a verified influencer network, ensuring brands connect with genuine influencers.",
+    },
+    {
+      id: "feature-3",
+      icon: send,
+      title: "Guaranteed Payments",
+      content:
+        "TA secure and reliable payment system ensuring prompt and guaranteed payments for influencers. Brands benefit from a streamlined financial process, fostering trust on both ends.",
   },
 ];
 
@@ -73,17 +73,17 @@ export const feedback = [
 export const stats = [
   {
     id: "stats-1",
-    title: "User Active",
+    title: "Creators Joined",
     value: "3800+",
   },
   {
     id: "stats-2",
-    title: "Trusted by Company",
+    title: "Brands Connected",
     value: "230+",
   },
   {
     id: "stats-3",
-    title: "Transaction",
+    title: "Campaigns Launched",
     value: "$230M+",
   },
 ];

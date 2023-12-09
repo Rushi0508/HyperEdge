@@ -25,7 +25,7 @@ const Hero = () => {
           of Influence
         </h1>
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-        Discover endless possibilities on HyperEdge. Strengthen your brand or amplify your voice in the vibrant world of influencer marketing. Get started now.
+        HyperEdge is a vibrant space for creators and brands to meet, collaborate, and redefine digital marketing. Learn More
         </p>
       </div>
 
