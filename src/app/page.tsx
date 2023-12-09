@@ -1,5 +1,6 @@
 import styles from "./style";
 import {Navbar, Business, Hero, CTA, Stats, Footer, Clients} from "./(components)"
+import Testimonials from "./(components)/Testimonals";
 
 function page() {
   return (
@@ -22,6 +23,7 @@ function page() {
         <div className={`${styles.boxWidth}`}>
           <Stats/>
           <Business/>
+          <Testimonials/>
           <CTA/>
           <Footer/>
         </div>
