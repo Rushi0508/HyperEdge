@@ -1,15 +1,19 @@
 "use client"
-import React, { useState } from 'react'
 import Image from 'next/image';
-import { arrowUp } from '../(assets)';
+import { arrowUp } from '../../(assets)';
+import { useState } from 'react'
 import { useRouter } from 'next/navigation';
 
-const GettingStarted = () => {
-    const [role, setRole] = useState("-1");
+const Register = ({setConfirm}:any) => {
     const router = useRouter()
+    const [role, setRole] = useState("-1");
+    const handleSubmit = ()=>{
+        console.log("Hello")
+        setConfirm(true)
+    }
   return (
     <>
-    <div className="h-screen relative bg-gray-gradient overflow-hidden">
+        <div className="h-screen relative bg-gray-gradient overflow-hidden">
         <div className="absolute bg-gradient-to-br h-full rounded-full blue__gradient blur-2xl circle-left"></div>
         <div className="absolute bg-gradient-to-br h-full rounded-full blue__gradient blur-2xl circle-right"></div>
 
@@ -76,7 +80,7 @@ const GettingStarted = () => {
                         <Image src={arrowUp} className="rotate-[220deg]" alt="up"/>
                         Back
                     </button>
-                    <button type="button" className={`text-sm py-2 px-4 xs:py-2 xs:px-6 font-medium xl:text-base text-primary bg-blue-gradient rounded-[10px] outline-none`}>
+                    <button onClick={handleSubmit} className={`text-sm py-2 px-4 xs:py-2 xs:px-6 font-medium xl:text-base text-primary bg-blue-gradient rounded-[10px] outline-none`}>
                         Submit
                     </button>
                 </div>
@@ -87,4 +91,4 @@ const GettingStarted = () => {
   )
 }
 
-export default GettingStarted
+export default Register

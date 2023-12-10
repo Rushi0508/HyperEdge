@@ -1,5 +1,5 @@
 "use client"
-import GettingStarted from "./GettingStarted"
+import GettingStarted from "./(components)/GettingStarted"
 const page = () => {
   return (
     <GettingStarted/>
