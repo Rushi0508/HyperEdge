@@ -109,6 +109,7 @@ model Brand {
   email           String          @unique
   password        String
   name            String
+  personName      String
   description     String?
   website         String?
   logo            String?
