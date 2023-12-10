@@ -1,0 +1,174 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Unit {
+  PER_POST
+  PER_VIDEO
+  PER_HOUR
+  PER_DAY
+  OTHER
+}
+
+model Creator {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  phoneNumber String?  @unique
+  password    String
+  username    String?
+  fullName    String
+  bio         String?
+  avatar      String?
+  isVerified  Boolean?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  heading         String?
+  charges         Int?
+  unit            Unit
+  languagesSpoken String[]
+  categories      String[]
+  city            String?
+  state           String?
+  country         String?
+
+  socialIds         String[]        @db.ObjectId
+  socials           SocialLinks[]
+  availability      Boolean?
+  campaignInviteIds String[]        @db.ObjectId
+  campaignInvites   Campaign[]      @relation(fields: [campaignInviteIds], references: [id])
+  proposalIds       String[]        @db.ObjectId
+  proposals         Proposal[]
+  collborations     Collaboration[]
+  collborationIds   String[]        @db.ObjectId
+  Testimonial       Testimonial[]
+  Portfolio         Portfolio[]
+}
+
+model SocialLinks {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  creator   Creator  @relation(fields: [creatorId], references: [id])
+  creatorId String   @db.ObjectId
+  instagram String?
+  youtube   String?
+  twitter   String?
+  facebook  String?
+  createdAt DateTime @default(now())
+}
+
+model Collaboration {
+  id         String              @id @default(auto()) @map("_id") @db.ObjectId
+  brand      Brand               @relation(fields: [brandId], references: [id])
+  brandId    String              @db.ObjectId
+  creator    Creator             @relation(fields: [creatorId], references: [id])
+  creatorId  String              @db.ObjectId
+  campaign   Campaign            @relation(fields: [campaignId], references: [id])
+  campaignId String              @db.ObjectId
+  status     CollaborationStatus
+  createdAt  DateTime            @default(now())
+}
+
+enum CollaborationStatus {
+  PENDING
+  APPROVED
+  DECLINED
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  creator   Creator  @relation(fields: [creatorId], references: [id])
+  creatorId String   @db.ObjectId
+  content   String
+  rating    Int
+  brand     Brand    @relation(fields: [brandId], references: [id])
+  brandId   String   @db.ObjectId
+  createdAt DateTime @default(now())
+}
+
+model Portfolio {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  creator     Creator  @relation(fields: [creatorId], references: [id])
+  creatorId   String   @db.ObjectId
+  title       String
+  description String
+  imageUrl    String
+  videoUrl    String
+  createdAt   DateTime @default(now())
+}
+
+model Brand {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  email           String          @unique
+  password        String
+  name            String
+  description     String?
+  website         String?
+  logo            String?
+  industry        String?
+  campaigns       Campaign[]
+  campaignIds     String[]        @db.ObjectId
+  collaborations  Collaboration[]
+  collborationIds String[]        @db.ObjectId
+  testimonials    Testimonial[]
+  testimonalIds   String[]        @db.ObjectId
+  createdAt       DateTime        @default(now())
+}
+
+model Campaign {
+  id              String             @id @default(auto()) @map("_id") @db.ObjectId
+  brand           Brand              @relation(fields: [brandId], references: [id])
+  brandId         String             @db.ObjectId
+  name            String
+  description     String
+  startDate       DateTime?
+  endDate         DateTime?
+  feesFrom        String?
+  feesTo          String?
+  unit            Unit
+  type            String?
+  collaborators   Creator[]          @relation(fields: [collaboratorIds], references: [id])
+  collaboratorIds String[]           @db.ObjectId
+  status          CampaignStatus
+  visibility      CampaignVisibility
+  proposals       Proposal[]
+  proposalIds     String[]           @db.ObjectId
+  createdAt       DateTime           @default(now())
+  Collaboration   Collaboration[]
+}
+
+model Proposal {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  campaign     Campaign       @relation(fields: [campaignId], references: [id])
+  campaignId   String         @db.ObjectId
+  creator      Creator        @relation(fields: [creatorId], references: [id])
+  creatorId    String         @db.ObjectId
+  message      String
+  proposedRate Int
+  status       ProposalStatus
+  createdAt    DateTime       @default(now())
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum CampaignVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum CampaignStatus {
+  PLANNED
+  ACTIVE
+  COMPLETED
+}
