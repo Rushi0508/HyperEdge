@@ -1,10 +1,16 @@
 import styles from "./style";
-import {Navbar, Business, Hero, CTA, Stats, Footer, Clients} from "./(components)"
-import Testimonials from "./(components)/Testimonals";
+import {Navbar, Business, Hero, CTA, Stats, Testimonals,Footer, Clients} from "./(components)"
+import { Poppins } from "next/font/google";
+import "./globals.css";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 function page() {
   return (
-    <div className="bg-primary w-full overflow-hidden">
+    <div className={`bg-primary w-full overflow-hidden ${poppins.className}`}>
       {/* /* Navbar  */}
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
@@ -23,7 +29,7 @@ function page() {
         <div className={`${styles.boxWidth}`}>
           <Stats/>
           <Business/>
-          <Testimonials/>
+          <Testimonals/>
           <Clients/>
           <CTA/>
           <Footer/>

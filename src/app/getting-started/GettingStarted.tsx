@@ -2,10 +2,11 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
 import { arrowUp } from '../(assets)';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const GettingStarted = () => {
     const [role, setRole] = useState("-1");
+    const router = useRouter()
   return (
     <>
     <div className="h-screen relative bg-gray-gradient overflow-hidden">
@@ -71,10 +72,10 @@ const GettingStarted = () => {
                     </select>
                 </div>
                 <div className='flex items-center justify-between gap-2 mt-2'>
-                    <Link href="./" className="flex items-center gap-1 bg-transparent text-dimWhite border-2 border-dimWhite py-2 px-4 xs:py-2 xs:px-6 rounded-[10px]">
+                    <button onClick={()=>router.push("/")} className="flex items-center gap-1 bg-transparent text-dimWhite border-2 border-dimWhite py-2 px-4 xs:py-2 xs:px-6 rounded-[10px]">
                         <Image src={arrowUp} className="rotate-[220deg]" alt="up"/>
                         Back
-                    </Link>
+                    </button>
                     <button type="button" className={`text-sm py-2 px-4 xs:py-2 xs:px-6 font-medium xl:text-base text-primary bg-blue-gradient rounded-[10px] outline-none`}>
                         Submit
                     </button>
