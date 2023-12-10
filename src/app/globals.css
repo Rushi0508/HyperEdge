@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.circle-left{
+  height: 1500px;
+  width: 1500px;
+  left: -750px;
+  top: -250px;
+}
+.circle-right{
+  height: 100px;
+  width: 1000px;
+  left: -500px;
+  top: -500px;
+}
 :root {
   --black-gradient: linear-gradient(
     144.39deg,
