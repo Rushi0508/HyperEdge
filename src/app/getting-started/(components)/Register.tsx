@@ -29,7 +29,7 @@ const Register = ({setConfirm}:any) => {
             ...prevDetails, role: e.target.value
         }))
         if(e.target.value=="1"){
-            setLabels({fname: "Representaive First Name", lname: "Representaive Last Name", email: "Business Email" })
+            setLabels({fname: "Representative First Name", lname: "Representative Last Name", email: "Business Email" })
         }else{
             setLabels({fname: "First Name", lname: "Last Name", email: "Email" })
         }
