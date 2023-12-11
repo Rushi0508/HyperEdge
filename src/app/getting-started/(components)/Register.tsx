@@ -7,9 +7,20 @@ import { useRouter } from 'next/navigation';
 const Register = ({setConfirm}:any) => {
     const router = useRouter()
     const [role, setRole] = useState("-1");
+    const [labels, setLabels] = useState({fname: "",lname: "",email: "" });
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleRoleChange = (e:any)=>{
+        setRole(e.target.value)
+        if(e.target.value=="1"){
+            setLabels({fname: "Representaive First Name", lname: "Representaive Last Name", email: "Business Email" })
+        }else{
+            setLabels({fname: "First Name", lname: "Last Name", email: "Email" })
+        }
+    }
     const handleSubmit = ()=>{
-        console.log("Hello")
-        setConfirm(true)
+        setIsLoading(!isLoading)
+        // setConfirm(true)
     }
   return (
     <>
@@ -29,9 +40,20 @@ const Register = ({setConfirm}:any) => {
             <h1 className="text-white font-semibold text-xl sm:text-2xl md:text-3xl mb-2">Get Started for free</h1>
             <p className="text-white text-xs sm:text-xl mb-5">Register yourself as a Creator or a Brand</p>
             <div className="relative text-sm xl:text-base">
+                <div className="flex flex-col gap-2 mb-4">
+                    <label className="text-white" htmlFor="role">Role</label>
+                    <select onChange={handleRoleChange}  id="role" className={`${role== "-1"? 'text-gray-300' : 'text-white'} outline-none focus:border-[#def9fa] w-full form-input py-2 px-4 rounded-md bg-transparent border border-white/30`}>
+                        <option className="text-black" selected value="-1">What best describes you ?</option>
+                        <option className="text-black" value="0">Influencer</option>
+                        <option className="text-black" value="1">Brand</option>
+                    </select>
+                </div>
+                {
+                    role=="-1"? null : (
+                <>
                 <div className="sm:flex flex-1 items-center gap-4 mb-4">
                     <div className="flex flex-col gap-2 w-full mb-4 sm:mb-0">
-                        <label className="text-white" htmlFor="fname">First Name</label>
+                        <label className="text-white" htmlFor="fname">{labels.fname}</label>
                         <input 
                             type="text" 
                             id="fname"
@@ -40,7 +62,7 @@ const Register = ({setConfirm}:any) => {
                         />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
-                        <label className="text-white" htmlFor="lname">Last Name</label>
+                        <label className="text-white" htmlFor="lname">{labels.lname}</label>
                         <input 
                             type="text" 
                             id="lname"
@@ -50,7 +72,7 @@ const Register = ({setConfirm}:any) => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 mb-4">
-                    <label className="text-white" htmlFor="email">Email</label>
+                    <label className="text-white" htmlFor="email">{labels.email}</label>
                     <input 
                         type="email"
                         id="email" 
@@ -67,21 +89,20 @@ const Register = ({setConfirm}:any) => {
                         className="placeholder:text-gray-300 text-white outline-none focus:border-[#def9fa] w-full form-input py-2 px-4 rounded-md bg-transparent border border-white/30"
                     />
                 </div>
-                <div className="flex flex-col gap-2 mb-4">
-                    <label className="text-white" htmlFor="role">Role</label>
-                    <select id="role" onChange={(e)=>{setRole(e.target.value)}} className={`${role== "-1"? 'text-gray-300' : 'text-white'} outline-none focus:border-[#def9fa] w-full form-input py-2 px-4 rounded-md bg-transparent border border-white/30`}>
-                        <option className="text-black" selected value="-1">What best describes you ?</option>
-                        <option className="text-black" value="0">Influencer</option>
-                        <option className="text-black" value="1">Brand</option>
-                    </select>
-                </div>
-                <div className='flex items-center justify-between gap-2 mt-2'>
-                    <button onClick={()=>router.push("/")} className="flex items-center gap-1 bg-transparent text-dimWhite border-2 border-dimWhite py-2 px-4 xs:py-2 xs:px-6 rounded-[10px]">
+                </>
+                )}
+                <div className='flex items-center gap-2 mt-2'>
+                    <button onClick={handleSubmit} className={`flex items-center justify-center text-sm py-2 px-4 xs:py-2 xs:px-6 font-medium xl:text-base text-dimWhite bg-transparent -outline-offset-2 outline-2 outline-dimWhite rounded-[10px] outline-none`}>
                         <Image src={arrowUp} className="rotate-[220deg]" alt="up"/>
-                        Back
+                        <span>Back</span>
                     </button>
-                    <button onClick={handleSubmit} className={`text-sm py-2 px-4 xs:py-2 xs:px-6 font-medium xl:text-base text-primary bg-blue-gradient rounded-[10px] outline-none`}>
-                        Submit
+                    <button onClick={handleSubmit} className={`flex items-center justify-center text-sm py-2 px-4 xs:py-2 xs:px-6 font-medium xl:text-base text-primary bg-blue-gradient rounded-[10px] outline-none`}>
+                        {
+                            isLoading? 
+                            <div className="animate-spin inline-block w-5 h-5 xl:w-6 xl:h-6 border-[3px] border-current border-t-transparent text-cyan-700 rounded-full dark:text-white" role="status" aria-label="loading">
+                                <span className="sr-only">Loading...</span>
+                            </div>:"Submit"
+                        }
                     </button>
                 </div>
             </div>
