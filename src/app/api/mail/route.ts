@@ -50,6 +50,6 @@ export async function POST(
         return NextResponse.json({status: true})
     } catch (errors: any) {
         console.log(errors)
-        return NextResponse.json({status: false})
+        return NextResponse.json({status: false, errors: errors})
     };
 }
