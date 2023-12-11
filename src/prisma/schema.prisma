@@ -110,6 +110,7 @@ model Brand {
   password        String
   name            String
   personName      String
+  personRole      String
   description     String?
   website         String?
   logo            String?
