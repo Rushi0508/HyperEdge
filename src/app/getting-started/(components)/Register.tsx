@@ -47,7 +47,11 @@ const Register = ({setConfirm}:any) => {
         setIsLoading(false)
         if(data.status){
             setConfirm(true)
-        }else{
+        }
+        else if(data.hasOwnProperty('message')){
+            toast.error(data.message)
+        }
+        else{
             toast.error("Unable to send mail. Try again later")
         }        
     }

@@ -13,33 +13,61 @@ export async function POST(
         return NextResponse.json({message: "Fill out all details"})
     }
     try{
-        let user;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        if(role=="0"){
-            user = await prisma.creator.create({
-                data: {
-                    email: email,
-                    password: hashedPassword,
-                    fullName: fname + " " + lname,
-                },
-            })
-        }else{
-            user = await prisma.brand.create({
-                data: {
-                    email: email,
-                    password: hashedPassword,
-                    personName: fname + " " + lname,
-                }
-            })
+        // If the email already exists in any model.
+        const creator = await prisma.creator.findUnique({
+            where: {
+                email: email
+            }
+        });
+        const brand = await prisma.brand.findUnique({
+            where: {
+                email: email
+            }
+        });
+        let user, host;
+        if(creator || brand){
+            if(creator && !creator.emailVerified){
+                user = creator;
+                host = process.env.CREATOR_HOST
+            }else if(brand && !brand.emailVerified){
+                user = brand;
+                host = process.env.BRAND_HOST
+            }
+            else{
+                return NextResponse.json({status: false, message: "Email is already registered"})
+            }
+        }
+        // Create new user then
+        else{
+            const hashedPassword = await bcrypt.hash(password, 10);
+            if(role=="0"){
+                host = process.env.CREATOR_HOST;
+                user = await prisma.creator.create({
+                    data: {
+                        email: email,
+                        password: hashedPassword,
+                        fullName: fname + " " + lname,
+                    },
+                })
+            }else{
+                host = process.env.BRAND_HOST
+                user = await prisma.brand.create({
+                    data: {
+                        email: email,
+                        password: hashedPassword,
+                        personName: fname + " " + lname,
+                    }
+                })
+            }
         }
 
         const userId = user.id
-        const expiresAt = new Date(user.createdAt);
+        const expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + 24);
 
         const token = generateRandomToken(24);
-        const link = `${process.env.HOST}/verify-email?token=${token}&id=${userId}&role=${role}`
-        
+        const link = `${host}/verify-email?token=${token}&id=${userId}&role=${role}`
+
         const userVerification = await prisma.userVerification.create({
             data: {
                 userId: userId,
