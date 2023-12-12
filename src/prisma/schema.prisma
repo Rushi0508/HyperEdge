@@ -19,17 +19,18 @@ enum Unit {
 }
 
 model Creator {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  email       String   @unique
-  phoneNumber String?  @unique
-  password    String
-  username    String?
-  fullName    String
-  bio         String?
-  avatar      String?
-  isVerified  Boolean?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  email         String   @unique
+  phoneNumber   String?  @unique
+  password      String
+  username      String?
+  fullName      String
+  bio           String?
+  avatar        String?
+  emailVerified Boolean? @default(false)
+  phoneVerified Boolean? @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   heading         String?
   charges         Int?
@@ -64,7 +65,7 @@ model SocialLinks {
   createdAt DateTime @default(now())
 }
 
-model UserVerifications {
+model UserVerification {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
   role      String
@@ -117,13 +118,16 @@ model Brand {
   id              String          @id @default(auto()) @map("_id") @db.ObjectId
   email           String          @unique
   password        String
-  name            String
+  phoneNumber     String
+  name            String?
   personName      String
-  personRole      String
+  personRole      String?
   description     String?
   website         String?
   logo            String?
   industry        String?
+  emailVerified   Boolean?        @default(false)
+  phoneVerified   Boolean?        @default(false)
   campaigns       Campaign[]
   campaignIds     String[]        @db.ObjectId
   collaborations  Collaboration[]

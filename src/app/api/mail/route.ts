@@ -1,6 +1,8 @@
 import prisma from "@/app/libs/prismadb"
 import nodemailer from 'nodemailer'
 import { NextResponse } from "next/server";
+import bcrypt from 'bcrypt'
+import generateRandomToken from "@/app/utils/randomToken";
 
 export async function POST(
     req: Request,
@@ -11,7 +13,41 @@ export async function POST(
         return NextResponse.json({message: "Fill out all details"})
     }
     try{
-        const otp = `${Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000}`;
+        let user;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        if(role=="0"){
+            user = await prisma.creator.create({
+                data: {
+                    email: email,
+                    password: hashedPassword,
+                    fullName: fname + " " + lname,
+                },
+            })
+        }else{
+            user = await prisma.brand.create({
+                data: {
+                    email: email,
+                    password: hashedPassword,
+                    personName: fname + " " + lname,
+                }
+            })
+        }
+
+        const userId = user.id
+        const expiresAt = new Date(user.createdAt);
+        expiresAt.setHours(expiresAt.getHours() + 24);
+
+        const token = generateRandomToken(24);
+        const link = `${process.env.HOST}/verify-email?token=${token}&id=${userId}&role=${role}`
+        
+        const userVerification = await prisma.userVerification.create({
+            data: {
+                userId: userId,
+                role: role=="0"? "Creator" : "Brand",
+                link: link,
+                expiresAt: expiresAt
+            }
+        })
 
         // mail configrations
         let config = {
@@ -34,8 +70,11 @@ export async function POST(
                         <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">HyperEdge</a>
                     </div>
                     <p style="font-size:1.2em">Hi, <i><b>${fname + " " + lname}</b></i></p>
-                    <p style="font-size:1.1em">Use the following OTP to complete your Sign Up procedures. OTP is valid for 15 minutes</p>
-                    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${otp}</h2>
+                    <p style="font-size:1.1em">Thank you for registering with HyperEdge. To ensure the security of your account, we kindly ask you to verify your email address by clicking the button below. After verification, you can proceed to complete your profile and begin your journey on HyperEdge.</p>
+                    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 20px;color: #fff;border-radius: 4px;">
+                    <a href='${link}' style="color: white; text-decoration: none"> Verify Here </a>
+                    </h2>
+                    <p style="font-size:1em">Please note that the verification link will expire within 24 hours.</p>
                     <p style="font-size:1em;">Regards,<br />HyperEdge</p>
                     <hr style="border:none;border-top:1px solid #eee" />
                     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">

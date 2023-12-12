@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/nodemailer": "^6.4.14",
     "axios": "^1.6.2",
+    "bcrypt": "^5.1.1",
     "next": "14.0.4",
     "nodemailer": "^6.9.7",
     "prisma": "^5.7.0",
