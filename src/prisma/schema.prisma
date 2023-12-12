@@ -118,7 +118,7 @@ model Brand {
   id              String          @id @default(auto()) @map("_id") @db.ObjectId
   email           String          @unique
   password        String
-  phoneNumber     String
+  phoneNumber     String?
   name            String?
   personName      String
   personRole      String?
