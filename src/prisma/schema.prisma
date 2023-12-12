@@ -33,7 +33,7 @@ model Creator {
 
   heading         String?
   charges         Int?
-  unit            Unit
+  unit            Unit?
   languagesSpoken String[]
   categories      String[]
   city            String?
