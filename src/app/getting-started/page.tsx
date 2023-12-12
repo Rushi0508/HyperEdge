@@ -6,6 +6,7 @@ const page = () => {
     <>
       <GettingStarted/>
       <Toaster
+        containerClassName="text-sm"
         position="top-center"
         gutter={8}
         toastOptions={{
