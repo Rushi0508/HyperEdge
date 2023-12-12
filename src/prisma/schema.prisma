@@ -64,6 +64,15 @@ model SocialLinks {
   createdAt DateTime @default(now())
 }
 
+model UserVerifications {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  role      String
+  link      String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
 model Collaboration {
   id         String              @id @default(auto()) @map("_id") @db.ObjectId
   brand      Brand               @relation(fields: [brandId], references: [id])
