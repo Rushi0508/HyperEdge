@@ -41,7 +41,7 @@ export async function POST(
         else{
             const hashedPassword = await bcrypt.hash(password, 10);
             if(role=="0"){
-                host = process.env.CREATOR_HOST;
+                host = process.env.NODE_ENV==='development'? process.env.CREATOR_HOST_LOCAL : process.env.CREATOR_HOST_PROD
                 user = await prisma.creator.create({
                     data: {
                         email: email,
@@ -50,7 +50,7 @@ export async function POST(
                     },
                 })
             }else{
-                host = process.env.BRAND_HOST
+                host = process.env.NODE_ENV==='development'? process.env.BRAND_HOST_LOCAL : process.env.BRAND_HOST_PROD
                 user = await prisma.brand.create({
                     data: {
                         email: email,
