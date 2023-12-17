@@ -12,6 +12,7 @@ export async function POST(
     if(!role || !fname || !lname || !email || !password){
         return NextResponse.json({message: "Fill out all details"})
     }
+    let user, host, userVerification;
     try{
         // If the email already exists in any model.
         const creator = await prisma.creator.findUnique({
@@ -24,7 +25,6 @@ export async function POST(
                 email: email
             }
         });
-        let user, host;
         if(creator || brand){
             if(creator && !creator.emailVerified){
                 user = creator;
@@ -68,7 +68,7 @@ export async function POST(
         const token = generateRandomToken(24);
         const link = `${host}/verify-email?token=${token}&id=${userId}&role=${role}`
 
-        const userVerification = await prisma.userVerification.create({
+        userVerification = await prisma.userVerification.create({
             data: {
                 userId: userId,
                 role: role=="0"? "Creator" : "Brand",
@@ -116,7 +116,29 @@ export async function POST(
         await transporter.sendMail(mailoptions);
         return NextResponse.json({status: true})
     } catch (errors: any) {
-        console.log(errors)
+        if(user){
+            if(role=="0"){
+                await prisma.creator.delete({
+                    where: {
+                        id: user.id
+                    }
+                })
+            }
+            if(role=="1"){
+                await prisma.brand.delete({
+                    where: {
+                        id: user.id
+                    }
+                })
+            }
+        }
+        if(userVerification){
+            await prisma.userVerification.delete({
+                where: {
+                    id: userVerification.id
+                }
+            })
+        }
         return NextResponse.json({status: false, errors: errors})
     };
 }

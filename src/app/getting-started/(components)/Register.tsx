@@ -42,6 +42,10 @@ const Register = ({setConfirm}:any) => {
     const handleSubmit = async ()=>{
         if(details.role=="-1") return toast.error("Select your Role")
         else if(isAnyFieldEmpty()) return toast.error("Please enter all the details")
+        var validEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if(!details.email.match(validEmail)){
+            return toast.error("Enter a valid email address")
+        }
         setIsLoading(true)
         const {data} = await axios.post('/api/mail', details)
         setIsLoading(false)
