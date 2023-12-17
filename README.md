@@ -1,1 +1,1 @@
-## Hyper-E: An Influencer Marketing Platform.
+## Hyper-E: An Influencer Marketing Platform
