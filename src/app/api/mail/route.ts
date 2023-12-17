@@ -28,10 +28,10 @@ export async function POST(
         if(creator || brand){
             if(creator && !creator.emailVerified){
                 user = creator;
-                host = process.env.CREATOR_HOST
+                host = process.env.NODE_ENV==='development'? process.env.CREATOR_HOST_LOCAL : process.env.CREATOR_HOST_PROD
             }else if(brand && !brand.emailVerified){
                 user = brand;
-                host = process.env.BRAND_HOST
+                host = process.env.NODE_ENV==='development'? process.env.BRAND_HOST_LOCAL : process.env.BRAND_HOST_PROD
             }
             else{
                 return NextResponse.json({status: false, message: "Email is already registered"})
