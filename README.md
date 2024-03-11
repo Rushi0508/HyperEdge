@@ -1,4 +1,4 @@
 ## Hyper-E: An Influencer Marketing Platform
 
-Creators site: hyper-e-creators.vercel.app
-Brands site: hyper-e-brands.vercel.app
+### Creators site: https://hyper-e-creators.vercel.app
+### Brands site: https://hyper-e-brands.vercel.app
