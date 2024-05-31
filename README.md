@@ -1,7 +1,7 @@
 # HyperEdge: Influencer Marketing Platform
-#### Static site: https://hyper-e.vercel.app
-#### Creators site: https://hyper-e-creators.vercel.app
-#### Brands site: https://hyper-e-brands.vercel.app
+#### Static Site: [Live](https://hyper-e.vercel.app/), [Repo](https://github.com/Rushi0508/HyperEdge)
+#### Creator Site: [Live](https://hyper-e-creators.vercel.app/), [Repo](https://github.com/Rushi0508/HyperEdge-Creators)
+#### Brand Site: [Live](https://hyper-e-brands.vercel.app/), [Repo](https://github.com/Rushi0508/HyperEdge-Brands)
 
 ## Purpose
 
